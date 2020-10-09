@@ -17,10 +17,12 @@ const sourceQuota = {
 // Creep blueprints
 const gruntBlueprint = {
     body: [WORK, MOVE, MOVE, CARRY, CARRY],
+    memory: {}
 }
 
 const barbarianBlueprint = {
     body: [TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, ATTACK, MOVE],
+    memory: {}
 }
 
 // Get the amount of screeps for a certain role
