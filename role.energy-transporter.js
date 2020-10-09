@@ -1,4 +1,4 @@
-var creepUtils = require('creep.utils')
+var roleUtils = require('utils.role')
 
 /**
  * A harvester's job is to harvest resources, and deposit them in containers.
@@ -8,25 +8,13 @@ var roleEnergyTransporter = {
     run: function(creep) {
         if(creep.store.getFreeCapacity() > 0) {
             // Withdrawing
-            var containers = creepUtils.getSortedFilledContainersForRoom(creep.room);
-            
-            if(creep.withdraw(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(containers[0], {visualizePathStyle: {stroke: '#ffaa00'}});
-            } else {
-                creep.say("⚡🤏")
+            if(!roleUtils.withdrawEnergyFromContainer(creep)){
+                roleUtils.harvestSource(creep);
             }
         } else {
             // Depositing
             // Obtain list of targets for depositing
-            var targets = creepUtils.getSortedTargetsListForRoom(creep.room)
-            
-            if(targets.length > 0) {
-                if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
-                    creep.moveTo(targets[0], {visualizePathStyle: {stroke: "#ffffff"}})
-                } else {
-                    creep.say("⚡👋")
-                }
-            }
+            roleUtils.rechargeBuilding(creep);
         }
     }
 };

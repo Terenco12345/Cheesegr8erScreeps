@@ -1,4 +1,4 @@
-var creepUtils = require('creep.utils')
+var roleUtils = require('utils.role')
 
 var roleUpgrader = {
     /** @param {Creep} creep **/
@@ -10,21 +10,15 @@ var roleUpgrader = {
             creep.memory.upgrading = true;
         }
 
+        // Perform action
         if(creep.memory.upgrading) {
-            if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ffffff'}});
-            } else {
-                creep.say('🔨🔼');
-            }
+            // Upgrading
+            roleUtils.upgradeController(creep);
         }
         else {
             // Withdrawing
-            var containers = creepUtils.getSortedFilledContainersForRoom(creep.room);
-            
-            if(creep.withdraw(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(containers[0], {visualizePathStyle: {stroke: '#ffaa00'}});
-            } else {
-                creep.say("⚡🤏")
+            if(!roleUtils.withdrawEnergyFromContainer(creep)){
+                roleUtils.harvestSource(creep)
             }
         }
     }

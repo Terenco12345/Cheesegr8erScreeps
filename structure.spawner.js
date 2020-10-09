@@ -1,47 +1,47 @@
-var creepUtils = require('creep.utils')
+var creepUtils = require('utils.creep')
 
 const spawnQuota = {
-    harvesters: 7,
-    energyTransporters: 2,
-    builders: 2,
-    upgraders: 2,
-    repairers: 2,
-    barbarians: 4
+    harvesters: 4,
+    energyTransporters: 0,
+    builders: 1,
+    upgraders: 1,
+    repairers: 1,
+    barbarians: 0
 }
 
 const sourceQuota = {
-    0: 4,
-    1: 3
+    0: 2,
+    1: 2
 }
 
 // Creep blueprints
 const harvesterBlueprint = {
-    body: [WORK, WORK, MOVE, MOVE, CARRY, CARRY],
+    body: [WORK, MOVE, CARRY],
     memory: {role: "harvester"}
 }
 
 const energyTransporterBlueprint = {
-    body: [WORK, MOVE, MOVE, CARRY],
+    body: [WORK, MOVE, CARRY],
     memory: {role: "energyTransporter"}
 }
 
 const builderBlueprint = {
-    body: [WORK, WORK, MOVE, CARRY, CARRY],
+    body: [WORK, MOVE, CARRY],
     memory: {role: "builder"}
 }
 
 const upgraderBlueprint = {
-    body: [WORK, WORK, MOVE, CARRY, CARRY],
+    body: [WORK, MOVE, CARRY],
     memory: {role: "upgrader"}
 }
 
 const repairerBlueprint = {
-    body: [WORK, WORK, MOVE, CARRY, CARRY],
+    body: [WORK, MOVE, CARRY],
     memory: {role: "repairer"}
 }
 
 const barbarianBlueprint = {
-    body: [TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, ATTACK, ATTACK, MOVE],
+    body: [TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, ATTACK, MOVE],
     memory: {role: "barbarian"}
 }
 
@@ -69,6 +69,10 @@ var trySpawnCreep = function(spawn, screepBlueprint){
     spawn.spawnCreep(screepBlueprint.body, creepUtils.generateCreepName(), {memory: screepBlueprint.memory})
 }
 
+/**
+ * Obtain the amount of harvesters assigned to a source.
+ * @param {*} index 
+ */
 var getHarvesterCountForSource = function(index){
     var count = 0;
     

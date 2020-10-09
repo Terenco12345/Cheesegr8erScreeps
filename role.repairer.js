@@ -1,4 +1,4 @@
-var creepUtils = require('creep.utils')
+var roleUtils = require('utils.role')
 
 var roleRepairer = {
     /** @param {Creep} creep **/
@@ -10,29 +10,15 @@ var roleRepairer = {
             creep.memory.repairing = true;
         }
 
+        // Perform action
         if (creep.memory.repairing) {
-            const targets = creep.room.find(FIND_STRUCTURES, {
-                filter: object => object.hits < object.hitsMax
-            });
-            
-            targets.sort((a,b) => (a.hits/a.hitsMax) - (b.hits/b.hitsMax));
-            
-            if(targets.length > 0) {
-                if(creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0]);
-                } else {
-                    creep.say('🛠️');
-                }
-            }
+            // Repair
+            roleUtils.repairBuilding(creep)
         }
         else {
             // Withdrawing
-            var containers = creepUtils.getSortedFilledContainersForRoom(creep.room);
-
-            if (creep.withdraw(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(containers[0], { visualizePathStyle: { stroke: '#ffaa00' } });
-            } else {
-                creep.say("⚡🤏")
+            if(!roleUtils.withdrawEnergyFromContainer(creep)){
+                roleUtils.harvestSource(creep);
             }
         }
     }

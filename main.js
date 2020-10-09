@@ -9,7 +9,7 @@ var roleArcher = require('combat-role.archer');
 
 var structureSpawner = require('structure.spawner');
 
-var creepUtils = require('creep.utils')
+var creepUtils = require('utils.creep')
 
 module.exports.loop = function () {
     // Clean dead creeps from memory
